@@ -10,15 +10,23 @@ import { Event } from '../../actions/actionTypes';
 
 interface EventsTableRowProps extends Event {
   isSelected: boolean;
+  onClick?(): void;
 }
 
 const EventsTableRow: FC<EventsTableRowProps> = ({
   title,
   date,
   location,
-  isSelected
+  isSelected,
+  onClick
 }) => (
-  <TableRow hover role='checkbox' tabIndex={-1} selected={isSelected}>
+  <TableRow
+    hover
+    role='checkbox'
+    tabIndex={-1}
+    selected={isSelected}
+    onClick={onClick}
+  >
     <TableCell padding='checkbox'>
       <Checkbox checked={isSelected} />
     </TableCell>

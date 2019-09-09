@@ -1,6 +1,10 @@
 import uuid from 'uuid/v4';
 import {
   ADD_EVENT,
+  SELECT_EVENT,
+  UNSELECT_EVENT,
+  SELECT_ALL_EVENTS,
+  UNSELECT_ALL_EVENTS,
   SET_IS_EVENT_DIALOG_ADD_OPEN,
   AppActions,
   Event
@@ -8,7 +12,7 @@ import {
 
 interface IState {
   events: Event[];
-  eventsToDelIds: string[];
+  eventsToDelIds: (string | undefined)[];
   eventsSearch: string;
   isEventsDialogAddOpen: boolean;
   isEventsDialogRemoveOpen: boolean;
@@ -34,6 +38,35 @@ export default function(state: IState = initialState, action: AppActions) {
             id: uuid()
           }
         ]
+      };
+    }
+    case SELECT_EVENT: {
+      return {
+        ...state,
+        eventsToDelIds: state.eventsToDelIds.includes(action.id)
+          ? [...state.eventsToDelIds]
+          : [...state.eventsToDelIds, action.id]
+      };
+    }
+    case UNSELECT_EVENT: {
+      return {
+        ...state,
+        eventsToDelIds: !state.eventsToDelIds.includes(action.id)
+          ? [...state.eventsToDelIds]
+          : [...state.eventsToDelIds.filter(id => id !== action.id)]
+      };
+    }
+    case SELECT_ALL_EVENTS: {
+      return {
+        ...state,
+        eventsToDelIds:
+          state.events.length > 0 ? state.events.map(event => event.id) : []
+      };
+    }
+    case UNSELECT_ALL_EVENTS: {
+      return {
+        ...state,
+        eventsToDelIds: []
       };
     }
     case SET_IS_EVENT_DIALOG_ADD_OPEN: {
