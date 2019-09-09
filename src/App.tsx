@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, Fragment } from 'react';
 
-const App: React.FC = () => {
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+
+import EventsTable from './components/EventsTable';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    appBar: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2)
+    },
+    container: {
+      marginTop: theme.spacing(4)
+    }
+  })
+);
+
+const App: FC = () => {
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <AppBar className={classes.appBar} position='static'>
+        <Typography variant='h4' align='center'>
+          Мероприятия
+        </Typography>
+      </AppBar>
+      <Container className={classes.container}>
+        <Paper>
+          <EventsTable />
+        </Paper>
+      </Container>
+    </Fragment>
   );
-}
+};
 
 export default App;
