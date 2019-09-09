@@ -50,7 +50,7 @@ class EventsAddDialog extends Component<LinkStateProps & LinkDispanchProps> {
   handleSubmit = () => {
     const { title, date, location } = this.state;
     if (title && date && location) {
-      addEvent({
+      this.props.addEvent({
         title,
         date,
         location
@@ -132,10 +132,12 @@ class EventsAddDialog extends Component<LinkStateProps & LinkDispanchProps> {
 
 interface LinkStateProps {
   isEventsDialogAddOpen: boolean;
+  events: Event[];
 }
 
 const mapStateToProps = (state: AppState): LinkStateProps => ({
-  isEventsDialogAddOpen: state.isEventsDialogAddOpen
+  isEventsDialogAddOpen: state.isEventsDialogAddOpen,
+  events: state.events
 });
 
 interface LinkDispanchProps {

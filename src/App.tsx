@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 
-import EventsTable from './components/EventsTable';
+import Events from './components/Events';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +31,7 @@ const App: FC = () => {
       </AppBar>
       <Container className={classes.container}>
         <Paper>
-          <EventsTable />
+          <Events />
         </Paper>
       </Container>
     </Fragment>
