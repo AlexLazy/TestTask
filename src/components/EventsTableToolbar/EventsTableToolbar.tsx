@@ -1,7 +1,12 @@
-import React, { FC, ChangeEvent, Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 
 import { connect } from 'react-redux';
-import { setIsEventDialogAddOpen } from '../../actions';
+import {
+  setIsEventsDialogAddOpen,
+  setIsEventsDialogRemoveOpen,
+  searchEvents
+} from '../../actions';
+import { AppState } from '../..';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,48 +17,79 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
 
 import EventsAddDialog from '../EventsAddDialog';
+import EventsRemoveDialog from '../EventsRemoveDialog';
 
 const useStyles = makeStyles({
   search: {
     marginLeft: 'auto'
   }
 });
-//@ts-ignore
-const EventsTableToolbar: FC = ({ setIsEventDialogAddOpen }) => {
+
+const EventsTableToolbar: FC<LinkStateProps & LinkDispanchProps> = ({
+  eventsToDelIds,
+  setIsEventsDialogAddOpen,
+  setIsEventsDialogRemoveOpen,
+  searchEvents
+}) => {
   const classes = useStyles();
-  const handleChange = () => {};
+
   return (
     <Fragment>
       <Toolbar>
         <Tooltip title='Добавить событие'>
           <IconButton
             aria-label='добавить событие'
-            onClick={() => setIsEventDialogAddOpen(true)}
+            onClick={() => setIsEventsDialogAddOpen(true)}
           >
             <AddIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title='Удалить выбранные события'>
-          <IconButton aria-label='удалить выбранные события'>
-            <RemoveIcon />
-          </IconButton>
+          <div>
+            <IconButton
+              aria-label='удалить выбранные события'
+              onClick={() => setIsEventsDialogRemoveOpen(true)}
+              disabled={!eventsToDelIds.length}
+            >
+              <RemoveIcon />
+            </IconButton>
+          </div>
         </Tooltip>
         <TextField
           label='Поиск'
           className={classes.search}
-          onChange={handleChange}
+          onChange={e => searchEvents(e.target.value)}
           margin='dense'
           variant='outlined'
         />
       </Toolbar>
       <EventsAddDialog />
+      <EventsRemoveDialog />
     </Fragment>
   );
 };
 
-const mapDispatchToProps = { setIsEventDialogAddOpen };
+interface LinkStateProps {
+  eventsToDelIds: (string | undefined)[];
+}
+
+const mapStateToProps = (state: AppState): LinkStateProps => ({
+  eventsToDelIds: state.eventsToDelIds
+});
+
+interface LinkDispanchProps {
+  setIsEventsDialogAddOpen(isOpen: boolean): void;
+  setIsEventsDialogRemoveOpen(isOpen: boolean): void;
+  searchEvents(search: string): void;
+}
+
+const mapDispatchToProps = {
+  setIsEventsDialogAddOpen,
+  setIsEventsDialogRemoveOpen,
+  searchEvents
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(EventsTableToolbar);

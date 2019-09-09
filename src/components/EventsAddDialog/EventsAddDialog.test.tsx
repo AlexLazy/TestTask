@@ -7,7 +7,7 @@ import { mount } from 'enzyme';
 import EventsAddDialog from './EventsAddDialog';
 import Select from '@material-ui/core/Select';
 
-const [setIsEventDialogAddOpen, addEvent] = new Array(2).fill(jest.fn());
+const [setIsEventsDialogAddOpen, addEvent] = new Array(2).fill(jest.fn());
 
 const mockStore = configureStore();
 
@@ -18,7 +18,7 @@ describe('<EventsAddDialog />', () => {
       <Provider
         store={mockStore({
           isEventsDialogAddOpen: true,
-          setIsEventDialogAddOpen,
+          setIsEventsDialogAddOpen,
           addEvent
         })}
       >

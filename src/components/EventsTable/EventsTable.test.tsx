@@ -30,7 +30,8 @@ describe('<EventsTable />', () => {
               location: '1'
             }
           ],
-          eventsToDelIds: []
+          eventsToDelIds: [],
+          eventsSearch: ''
         })}
       >
         <EventsTable />

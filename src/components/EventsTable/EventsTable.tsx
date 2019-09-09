@@ -26,7 +26,8 @@ const EventsTable: FC<LinkStateProps & LinkDispanchProps> = ({
   unselectEvent,
   selectAllEvents,
   unselectAllEvents,
-  eventsToDelIds
+  eventsToDelIds,
+  eventsSearch
 }) => {
   const handleSelectAll = () => {
     eventsToDelIds.length === events.length
@@ -57,19 +58,24 @@ const EventsTable: FC<LinkStateProps & LinkDispanchProps> = ({
       </TableHead>
       <TableBody>
         {events.length > 0 &&
-          events.map(event => (
-            <EventsTableRow
-              key={event.id}
-              onClick={() =>
-                event.id &&
-                (eventsToDelIds.includes(event.id)
-                  ? unselectEvent(event.id)
-                  : selectEvent(event.id))
-              }
-              isSelected={!!event.id && eventsToDelIds.includes(event.id)}
-              {...event}
-            />
-          ))}
+          events
+            .filter(event => {
+              if (!eventsSearch) return true;
+              return event.title.includes(eventsSearch);
+            })
+            .map(event => (
+              <EventsTableRow
+                key={event.id}
+                onClick={() =>
+                  event.id &&
+                  (eventsToDelIds.includes(event.id)
+                    ? unselectEvent(event.id)
+                    : selectEvent(event.id))
+                }
+                isSelected={!!event.id && eventsToDelIds.includes(event.id)}
+                {...event}
+              />
+            ))}
       </TableBody>
     </Table>
   );
@@ -78,11 +84,13 @@ const EventsTable: FC<LinkStateProps & LinkDispanchProps> = ({
 interface LinkStateProps {
   events: Event[];
   eventsToDelIds: (string | undefined)[];
+  eventsSearch: string;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   events: state.events,
-  eventsToDelIds: state.eventsToDelIds
+  eventsToDelIds: state.eventsToDelIds,
+  eventsSearch: state.eventsSearch
 });
 
 interface LinkDispanchProps {

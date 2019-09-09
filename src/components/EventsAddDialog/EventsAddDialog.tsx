@@ -3,7 +3,7 @@ import React, { Component, ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../index';
 import { Event } from '../../actions/actionTypes';
-import { setIsEventDialogAddOpen, addEvent } from '../../actions';
+import { setIsEventsDialogAddOpen, addEvent } from '../../actions';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -46,7 +46,7 @@ class EventsAddDialog extends Component<LinkStateProps & LinkDispanchProps> {
       location: e.target.value + ''
     });
 
-  handleClose = () => this.props.setIsEventDialogAddOpen(false);
+  handleClose = () => this.props.setIsEventsDialogAddOpen(false);
   handleSubmit = () => {
     const { title, date, location } = this.state;
     if (title && date && location) {
@@ -141,11 +141,11 @@ const mapStateToProps = (state: AppState): LinkStateProps => ({
 });
 
 interface LinkDispanchProps {
-  setIsEventDialogAddOpen(isOpen: boolean): void;
+  setIsEventsDialogAddOpen(isOpen: boolean): void;
   addEvent(event: Event): void;
 }
 
-const mapDispatchToProps = { setIsEventDialogAddOpen, addEvent };
+const mapDispatchToProps = { setIsEventsDialogAddOpen, addEvent };
 
 export default connect(
   mapStateToProps,

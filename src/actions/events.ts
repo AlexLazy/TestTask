@@ -4,7 +4,10 @@ import {
   UNSELECT_EVENT,
   SELECT_ALL_EVENTS,
   UNSELECT_ALL_EVENTS,
-  SET_IS_EVENT_DIALOG_ADD_OPEN,
+  REMOVE_SELECTED_EVENTS,
+  SET_IS_EVENTS_DIALOG_ADD_OPEN,
+  SET_IS_EVENTS_DIALOG_REMOVE_OPEN,
+  SETARCH_EVENTS,
   AppActions,
   Event
 } from '../actions/actionTypes';
@@ -32,7 +35,21 @@ export const unselectAllEvents = (): AppActions => ({
   type: UNSELECT_ALL_EVENTS
 });
 
-export const setIsEventDialogAddOpen = (isOpen: boolean): AppActions => ({
-  type: SET_IS_EVENT_DIALOG_ADD_OPEN,
+export const removeSelectedEvents = (): AppActions => ({
+  type: REMOVE_SELECTED_EVENTS
+});
+
+export const setIsEventsDialogAddOpen = (isOpen: boolean): AppActions => ({
+  type: SET_IS_EVENTS_DIALOG_ADD_OPEN,
   isOpen
+});
+
+export const setIsEventsDialogRemoveOpen = (isOpen: boolean): AppActions => ({
+  type: SET_IS_EVENTS_DIALOG_REMOVE_OPEN,
+  isOpen
+});
+
+export const searchEvents = (search: string): AppActions => ({
+  type: SETARCH_EVENTS,
+  search
 });
